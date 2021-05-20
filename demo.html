@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>jquery tag plugin demo</title>
+    <link rel="stylesheet" href="assets/css/default.css"/>
+</head>
+
+<body>
+<fieldset>
+    <legend>Basic demo:</legend>
+    <div>
+        <label for="tag1">您喜欢的城市: </label>
+        <div>
+            <input type="text" name="tags" id="tag1" placeholder="请输入标签..."/>
+        </div>
+    </div>
+    <button type="button">Submit</button>
+    <p></p>
+</fieldset>
+
+<fieldset>
+    <legend>Default tag:</legend>
+    <div>
+        <label for="tag2">您喜欢的城市: </label>
+        <div>
+            <input type="text" name="tags" id="tag2" value="北京,上海"
+                   placeholder="请输入标签..."/>
+        </div>
+    </div>
+    <button type="button">Submit</button>
+    <p></p>
+</fieldset>
+
+<fieldset>
+    <legend>Ajax tag:</legend>
+    <div>
+        <label for="tag3">您喜欢的城市: </label>
+        <div>
+            <input type="text" name="tags" id="tag3" value="北京,上海"
+                   placeholder="请输入标签..."/>
+        </div>
+    </div>
+    <button type="button">Submit</button>
+    <p></p>
+</fieldset>
+
+<script src="assets/js/jquery-2.0.3.min.js"></script>
+<script src="assets/js/typeahead.min.js"></script>
+<script src="assets/js/jquery-tag.min.js"></script>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        // DEMO 1
+        var $tag1 = $('#tag1');
+        $tag1.tag({
+            placeholder: $tag1.attr('placeholder'),
+            //enable typeahead by specifying the source array
+            source: ["北京", "上海", "深圳", "广州", "杭州", "成都", "other"]
+        });
+        $tag1.parent().parent().next().click(function () {
+            $(this).next().text('Tag values: ' + $tag1.val());
+        });
+
+        // DEMO 2
+        var $tag2 = $('#tag2');
+        $tag2.tag({
+            placeholder: $tag1.attr('placeholder'),
+            //enable typeahead by specifying the source array
+            source: ["北京", "上海", "深圳", "广州", "杭州", "成都", "other"]
+        });
+        $tag2.parent().parent().next().click(function () {
+            $(this).next().text('Tag values: ' + $tag1.val());
+        });
+
+        // DEMO 3
+        var $tag3 = $('#tag3');
+        $tag3.tag({
+            placeholder: $tag1.attr('placeholder'),
+            /**
+             * source function, Include 2 parameters:
+             * 1. v: the value you input
+             * 2. f: function to process v
+             */
+            source: function (v, f) {
+                console.log(v);
+                console.log(f);
+                let data = [];
+                // query data from URL
+                $.ajax({
+                    url: 'demo.json',
+                    data: {},
+                    type: 'get',
+                    async: false,
+                    success: function (d) {
+                        data = d;
+                    }
+                });
+                // Return an array from Ajax result
+                return data;
+                // Return an array directly
+                // return ['a', 'b', 'c', 'd', 'e', 'f']
+            }
+        });
+        $tag3.parent().parent().next().click(function () {
+            $(this).next().text('Tag values: ' + $tag1.val());
+        });
+    });
+</script>
+</body>
+</html>
