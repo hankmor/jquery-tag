@@ -1,5 +1,5 @@
 # jquery-tag
-简单易用的jquery tag plugin.
+简单易用的`jquery`标签输入插件.
 
 源代码来twitter的 [typeahead.js](http://twitter.github.com/bootstrap/javascript.html#typeahead) 和 [bootstrap-tag.js](https://github.com/fdeschenes/bootstrap-tag) ，做了部分改动，添加一些示例。
 
