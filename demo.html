@@ -45,9 +45,25 @@
     <p></p>
 </fieldset>
 
+<fieldset>
+    <legend>Event:</legend>
+    <div>
+        <label for="tag4">您喜欢的城市: </label>
+        <div>
+            <input type="text" name="tags" id="tag4" value="北京,上海"
+                   placeholder="请输入标签..."/>
+        </div>
+    </div>
+    <button type="button">Submit</button>
+    <p></p>
+</fieldset>
+
 <script src="assets/js/jquery-2.0.3.min.js"></script>
-<script src="assets/js/typeahead.min.js"></script>
-<script src="assets/js/jquery-tag.min.js"></script>
+<!--<script src="assets/js/typeahead.min.js"></script>-->
+<!--<script src="assets/js/jquery-tag.min.js"></script>-->
+<script src="assets/js/typeahead.js"></script>
+-->
+<script src="assets/js/jquery-tag.js"></script>
 
 <script type="text/javascript">
     jQuery(function ($) {
@@ -65,7 +81,7 @@
         // DEMO 2
         var $tag2 = $('#tag2');
         $tag2.tag({
-            placeholder: $tag1.attr('placeholder'),
+            placeholder: $tag2.attr('placeholder'),
             //enable typeahead by specifying the source array
             source: ["北京", "上海", "深圳", "广州", "杭州", "成都", "other"]
         });
@@ -76,7 +92,7 @@
         // DEMO 3
         var $tag3 = $('#tag3');
         $tag3.tag({
-            placeholder: $tag1.attr('placeholder'),
+            placeholder: $tag3.attr('placeholder'),
             /**
              * source function, Include 2 parameters:
              * 1. v: the value you input
@@ -103,6 +119,23 @@
             }
         });
         $tag3.parent().parent().next().click(function () {
+            $(this).next().text('Tag values: ' + $tag1.val());
+        });
+
+        // DEMO4 : EVENT
+        var $tag4 = $('#tag4');
+        $tag4.tag({
+            placeholder: $tag4.attr('placeholder'),
+            source: ["北京", "上海", "深圳", "广州", "杭州", "成都", "other"],
+        });
+        $tag4.on('added', function (e, tag) {
+            alert(tag + " 被成功添加！");
+        });
+        $tag4.on('removed', function (e, tag) {
+            console.log(tag);
+            alert(tag + " 被成功移除！");
+        });
+        $tag4.parent().parent().next().click(function () {
             $(this).next().text('Tag values: ' + $tag1.val());
         });
     });
